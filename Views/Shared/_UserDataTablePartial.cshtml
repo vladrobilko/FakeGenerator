@@ -1,0 +1,12 @@
+﻿@model FakeDataConfigurationViewModel
+
+@foreach (var user in Model.Users)
+{
+    <tr>
+        <td>@user.Number</td>
+        <td>@user.Id</td>
+        <td>@user.FullName</td>
+        <td>@user.Address</td>
+        <td>@user.Phone</td>
+    </tr>
+}

@@ -1,0 +1,79 @@
+﻿@model FakeGenerator.Models.FakeDataConfigurationViewModel
+
+<div class="container mt-5">
+    <h2>Generate Fake User Data</h2>
+    <form method="post" class="form-inline">
+        <div class="row">
+            <div class="col-sm-3 mb-2">
+                <label for="region" class="mr-2">Select Region:</label>
+                <select class="form-control" id="region" asp-for="Region">
+                    <option value="en_US">USA</option>
+                    <option value="ge">Georgia</option>
+                    <option value="ja">Japan</option>
+                </select>
+            </div>
+
+            <div class="col-sm-2 mb-2">
+                <label for="errorSlider" class="mr-2">Errors (0-10):</label>
+                <input type="range" class="form-control-range" id="errorSlider" min="0" max="10" step="0.1" />
+            </div>
+
+            <div class="col-sm-2 mb-2">
+                <label for="errorCount" class="mr-2">Errors (0-1000):</label>
+                <input type="number" class="form-control" id="errorCount" asp-for="ErrorCount" min="0" max="1000" step="0.1" />
+            </div>
+
+            <div class="col-sm-2 mb-2">
+                <label for="seed" class="mr-2">Seed:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="seed" asp-for="Seed" min="0" max="2147483647" />
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary" id="generateSeed">Random</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-1 mb-2">
+                <label>Generate:</label>
+                <button type="submit" class="btn btn-primary btn-block">Generate</button>
+            </div>
+            
+            <div class="col-sm-1 mb-2">
+                <label>Export:</label>
+                <button type="submit" class="btn btn-success btn-block" formaction="@Url.Action("Export")">Export</button>
+                <input type="hidden" id="usersCount" name="usersCount" value="1" />
+            </div>
+        </div>
+    </form>
+    
+    <table class="table mt-4" id="userDataTable">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Random ID</th>
+            <th>Full Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td class="text-nowrap">@user.Number</td>
+                <td class="text-nowrap">@user.Id</td>
+                <td class="text-nowrap">@user.FullName</td>
+                <td class="text-nowrap">@user.Address</td>
+                <td class="text-nowrap">@user.Phone</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@section scripts {
+    <script src="~/js/infinite-scroll-loader.js" ></script>
+    <script src="~/js/random-seed-generator.js"></script>
+    <script src="~/js/slider-field-connection.js"></script>
+    <script src="~/js/get-last-tablenumber.js"></script>
+}
